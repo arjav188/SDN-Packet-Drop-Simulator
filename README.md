@@ -34,21 +34,43 @@ Execution Steps
 1. Start POX Controller
 cd ~/pox
 ./pox.py openflow.of_01 drop_controller
-<img width="641" height="231" alt="image" src="https://github.com/user-attachments/assets/57fbee03-76a9-44d1-86a9-0e0fb9e3abbd" />
+<img width="646" height="437" alt="Screenshot from 2026-04-17 06-34-27" src="https://github.com/user-attachments/assets/6a29205a-7526-4e8d-977d-bd0c1e0be1b3" />
+<img width="641" height="284" alt="2" src="https://github.com/user-attachments/assets/b511faea-7f43-4354-b8a6-f2a1f87ca4f1" />
 
 2. Start Mininet
 sudo mn --topo single,2 --controller=remote,ip=127.0.0.1,port=6633
 
 Test Scenarios
-✅ Scenario 1: Normal Network
+Scenario 1: Normal Network
 sudo mn --topo single,2
 pingall
 
 Result: 0% packet loss
+<img width="515" height="271" alt="normal" src="https://github.com/user-attachments/assets/b6b9f4ac-332c-4955-b3ca-c295fa542c13" />
 
-❌ Scenario 2: Packet Drop
+
+Scenario 2: Packet Drop
 pingall
 
 Result: 100% packet loss
+<img width="645" height="385" alt="3" src="https://github.com/user-attachments/assets/34a03c7e-6c94-4e60-8a32-c70d239f80f7" />
 
 h1 ping h2
+
+Performance Observation
+Latency (ping):
+ICMP packets fail due to drop rule
+Throughput (iperf):
+Can be tested separately; only ICMP is blocked
+Flow Table Verification:
+sudo ovs-ofctl dump-flows s1
+<img width="759" height="28" alt="Screenshot from 2026-04-17 06-43-59" src="https://github.com/user-attachments/assets/ab4a4f84-79de-438d-b36f-59f33a188bd2" />
+
+Validation / Regression Testing
+The experiment was repeated multiple times
+Packet drop behavior remained consistent
+Flow rules were correctly reinstalled on each run
+
+Conclusion
+
+This project demonstrates how SDN enables centralized control of network behavior. By installing flow rules, specific traffic (ICMP) can be selectively dropped, allowing simulation of packet loss and network failure conditions.
