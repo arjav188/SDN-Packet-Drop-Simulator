@@ -1,5 +1,4 @@
-Problem Statement
-The goal of this project is to simulate packet loss in a network using Software Defined Networking (SDN). This is achieved by installing OpenFlow rules that selectively drop packets (ICMP) in a Mininet-based network.
+The goal of this project is to simulate packet loss in a network using Software Defined Networking (SDN).
 
 Objective
 Understand SDN architecture (control plane vs data plane)
@@ -31,7 +30,7 @@ No action → packet is dropped
 
 This rule is installed when the switch connects to the controller.
 Execution Steps
-1. Start POX Controller
+# Start POX Controller
 cd ~/pox
 ./pox.py openflow.of_01 drop_controller
 <img width="646" height="437" alt="Screenshot from 2026-04-17 06-34-27" src="https://github.com/user-attachments/assets/6a29205a-7526-4e8d-977d-bd0c1e0be1b3" />
@@ -65,6 +64,7 @@ Can be tested separately; only ICMP is blocked
 Flow Table Verification:
 sudo ovs-ofctl dump-flows s1
 <img width="759" height="28" alt="Screenshot from 2026-04-17 06-43-59" src="https://github.com/user-attachments/assets/ab4a4f84-79de-438d-b36f-59f33a188bd2" />
+The flow table shows a rule matching ICMP traffic (nw_proto=1) with action drop, confirming packet filtering.
 
 Validation / Regression Testing
 The experiment was repeated multiple times
